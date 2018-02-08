@@ -1,9 +1,10 @@
 var mongoose = require('mongoose');
+var chalk = require('chalk');
 //var dbURI = mongodb://localhost:27017/employeeDirectory
 
-var dbURI =  process.env.MONGODB_URI || 'mongodb://admin:admin@ds141514.mlab.com:41514/employeedirectory';
-var chalk = require('chalk');
-mongoose.connect(dbURI);
+var dbURI =  process.env.MONGODB_URL || 'mongodb://admin:admin@ds141514.mlab.com:41514/employeedirectory';
+mongoose.connect(dbURI, {
+    useMongoClient: true });
 
 mongoose.connection.on('connected', function(){
     console.log(chalk.green('mongoose connected to ' + dbURI));

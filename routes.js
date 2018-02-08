@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Common response headers
 app.use(middlewares.commonResponseHeaders);
 
-app.route('').get(employee.getAllEmployees);
+app.route('/').get(employee.getAllEmployees);
 app.route('/getAllEmployees').get(employee.getAllEmployees);
 app.route('/updateEmployee/:id').put(employee.updateEmployee);
 app.route('/deleteEmployee/:id').delete(employee.deleteEmployee);

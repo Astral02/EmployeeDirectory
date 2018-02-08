@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 //var dbURI = mongodb://localhost:27017/employeeDirectory
 
-var dbURI =  'mongodb://admin:admin@ds141514.mlab.com:41514/employeedirectory';
+var dbURI =  process.env.MONGODB_URI || 'mongodb://admin:admin@ds141514.mlab.com:41514/employeedirectory';
 var chalk = require('chalk');
 mongoose.connect(dbURI);
 

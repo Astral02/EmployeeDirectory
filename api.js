@@ -4,7 +4,7 @@ var employee = require('./Models/employee').employee;
 exports.getAllEmployees = function (req, res, next) {
     employee.find({}, function (err, data) {
         if (err) return res.status(400).json(err);
-        return res.json(data);
+        return res.status(200).json(data);
     });
 };
 

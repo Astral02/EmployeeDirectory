@@ -11,11 +11,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Common response headers
 app.use(middlewares.commonResponseHeaders);
 
-app.route('/').get(employee.getAllEmployees);
+app.route('/').get(employee.HomePage);
 app.route('/getAllEmployees').get(employee.getAllEmployees);
 app.route('/updateEmployee/:id').put(employee.updateEmployee);
 app.route('/deleteEmployee/:id').delete(employee.deleteEmployee);
 app.route('/createEmployee').post(employee.createEmployee);
+app.route('/editEmployee/:id').get(employee.editEmployee);
 
 app.route('*').get(middlewares.error);
 

@@ -5,6 +5,6 @@ exports.commonResponseHeaders = function (req, res, next) {
     res.setHeader('Access-Control-Allow-Credentials', true);
     next();
 }
-exports.error = function (req, res, next) {
+exports.error = function (req, res, err) {
    res.status(405).json(err);
 };

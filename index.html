@@ -97,13 +97,13 @@
                 </td>
                 <td>
                   <button class="btn btn-success btn-md" ng-disabled="employeeform.$invalid" ng-click="addEmployee()">Add</button>
+                   </td>
                   <td>
                     <button class="btn btn-info btn-md" ng-disabled="employeeform.$invalid" ng-click="updateEmployee()">Update</button>
                   </td>
                   <td>
                     <button class="btn btn-info btn-md" ng-disabled="employeeform.$invalid" ng-click="cancel()">Cancel</button>
                   </td>
-                </td>
             </tr>
             <tr ng-repeat="employee in employees">
               <td>{{employee.Name}}</td>
@@ -112,9 +112,8 @@
               <td>{{employee.Department}}</td>
               <td>{{employee.Gender}}</td>
               <td>{{employee.Age}}</td>
-              <td>
-                <button class="btn btn-primary btn-sm" ng-click="editEmployee(employee._id)">Edit</button>&nbsp;&nbsp;
-                <button class="btn btn-danger btn-sm" ng-click="removeEmployee(employee._id)">Delete</button>
+              <td><button class="btn btn-primary btn-sm" ng-click="editEmployee(employee._id)">Edit</button></td>
+              <td><button class="btn btn-danger btn-sm" ng-click="removeEmployee(employee._id)">Delete</button></td>
               </td>
             </tr>
           </tbody>

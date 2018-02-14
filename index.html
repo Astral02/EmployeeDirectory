@@ -15,7 +15,6 @@
     emplopyeeDirectoryApp.controller('employeeCtrl', ['$scope', '$http', function ($scope, $http) {
       var updateView = function () {
         $http.get('/getAllEmployees').then(function (response) {
-          console.log("response " + response.data)
           $scope.employees = response.data;
           $scope.employee = {};
         });
@@ -27,19 +26,16 @@
         });
       };
       $scope.removeEmployee = function (id) {
-        console.log('emp _id is' + id);
         $http.delete('/deleteEmployee/' + id).then(function (response) {
           updateView();
         });
       };
       $scope.editEmployee = function (id) {
-        console.log(id);
         $http.get('/editEmployee/' + id).then(function (response) {
           $scope.employee = response.data;
         });
       };
       $scope.updateEmployee = function () {
-        console.log($scope.employee._id);
         $http.put('/updateEmployee/' + $scope.employee._id, $scope.employee).then(function (response) {
           updateView();
         });

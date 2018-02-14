@@ -20,10 +20,10 @@ var Schema = mongoose.Schema;
 
 var employeeSchema = new Schema({
     Name: String,
-    Email: { type: String, unique: true },
+    Email: { type: String},
     DateofBirth: String,
     Department: String,
-    Gender: String,
+    Gender: { type: String, enum: ['male', 'Male', 'Female', 'female'] },
     Age: Number
 });
 

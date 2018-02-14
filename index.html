@@ -17,13 +17,13 @@
         $http.get('/getAllEmployees').then(function (response) {
           $scope.employees = response.data;
           $scope.employee = {};
-          $scope.isEdit = False;
-          $scope.isAdd = True;
+          $scope.isEdit = false;
+          $scope.isAdd = true;
         });
       };
       updateView();
-      $scope.isEdit = False;
-      $scope.isAdd = True;
+      $scope.isEdit = false;
+      $scope.isAdd = true;
       $scope.cancel = function(){
         $scope.employee = {};
         updateView();
@@ -39,8 +39,8 @@
         });
       };
       $scope.editEmployee = function (id) {
-        $scope.isEdit = True;
-         $scope.isAdd = False;
+        $scope.isEdit = true;
+         $scope.isAdd = false;
         $http.get('/editEmployee/' + id).then(function (response) {
           $scope.employee = response.data;
         });

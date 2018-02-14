@@ -6,5 +6,5 @@ exports.commonResponseHeaders = function (req, res, next) {
     next();
 }
 exports.error = function (req, res, err) {
-   res.status(405).json(err);
+    res.status(405).json(err);
 };

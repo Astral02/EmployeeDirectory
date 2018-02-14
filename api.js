@@ -1,31 +1,13 @@
 var employee = require('./Models/employee').employee;
+var chalk = require('chalk');
 
-exports.HomePage = function(req, res, next){
-    res.sendFile('./index.html', {root: __dirname});
+exports.HomePage = function (req, res, next) {
+    res.sendFile('./index.html', { root: __dirname });
 };
 
-//Get the next sequence value for auto increment
-function getNextSequenceValue(sequenceName){
-    var sequenceDocument = db.counters.findAndModify({
-       query:{_id: sequenceName },
-       update: {$inc:{sequence_value:1}},
-       new:true
-    });
-    return sequenceDocument.sequence_value;
- }
-
- //Calculate Age
- function calculate_age(dob) { 
-    var diff_ms = Date.now() - dob.getTime();
-    var age_dt = new Date(diff_ms); 
-    return Math.abs(age_dt.getUTCFullYear() - 1970);
+function calculate_age(input) {
+    return ((new Date().getTime() - input.getTime()) / (1000 * 60 * 60 * 24 * 365)) | 0;
 }
-
-function getAge(date) {
-    var now = new Date();
-    var age = now.getFullYear() - date.getFullYear();
-    return age;
-};
 
 // find all the employees
 exports.getAllEmployees = function (req, res, next) {
@@ -35,65 +17,49 @@ exports.getAllEmployees = function (req, res, next) {
     });
 };
 
-exports.editEmployee = function(req, res, next) {
-    employee.findOne( {_Id: req.params.id}, req.body, function(err, data){
-        if(err) return next(err);
+exports.editEmployee = function (req, res, next) {
+    employee.findById(req.params.id, req.body, function (err, data) {
+        if (err) return next(err);
         return res.status(200).json(data);
     });
-;}
+    ;
+}
 
-exports.updateEmployee = function(req, res, next){
+exports.updateEmployee = function (req, res, next) {
     var updateEmployee = {
         Name: req.body.Name,
         Email: req.body.Email,
-        DateOfBirth: req.body.DateOfBirth,
+        DateofBirth: req.body.DateofBirth,
         Department: req.body.Department,
         Gender: req.body.Gender,
-        Age: getAge(req.body.DateOfBirth)
+        Age: calculate_age(new Date(req.body.DateofBirth))
     }
-    employee.update({ _id: req.params.id }, { $set: editData }, function (err, data) {
+    employee.update({ _id: req.params.id }, { $set: updateEmployee }, function (err, data) {
         if (err) return res.status(400).json(err);
         return res.status(200).json(data);
     });
 }
 
-/* Create Employee */
-// exports.createEmployee = function(req, res, next){
-//     employee.create(req.body, function(err, data){
-//         if(err) return next(err);
-//         return res.status(200).json(data);
-//     });
-// };
+exports.createEmployee = function (req, res, next) {
+    console.log('age is ' + req.body.DateofBirth);
 
-
-exports.createEmployee = function(req, res, next){
     var createData = {
-        _id: getNextSequenceValue("employeeId"),
         Name: req.body.Name,
         Email: req.body.Email,
-        DateOfBirth: req.body.DateOfBirth,
+        DateofBirth: req.body.DateofBirth,
         Department: req.body.Department,
         Gender: req.body.Gender,
-        Age: getAge(req.body.DateOfBirth)
+        Age: calculate_age(new Date(req.body.DateofBirth))
     }
     employee.create(createData, function (err, data) {
         if (err) return res.status(400).json(err);
         return res.status(200).json(data);
     });
 };
-
-  /* Update Employee */
-// exports.updateEmployee = function(req, res, next){
-//     employee.findOneAndUpdate({ _Id: req.params.id }, req.body, function(err, data){
-//         if(err) return next(err);
-//         return res.status(200).json(data);
-//     });
-// };
-
-  /* DELETE Employee  */
-  exports.deleteEmployee = function(req, res, next){
-    employee.findOneAndRemove( { _Id: req.params.id }, req.body, function(err, data){
-        if(err) return next(err);
+/* DELETE Employee  */
+exports.deleteEmployee = function (req, res, next) {
+    employee.findByIdAndRemove(req.params.id, function (err, data) {
+        if (err) return next(err);
         return res.status(200).json(data);
     });
 };

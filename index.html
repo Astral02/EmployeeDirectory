@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html ng-app="emplopyeeDirectoryApp">
-
 <head>
   <title>MEAN Stack Application</title>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -10,59 +9,43 @@
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
     crossorigin="anonymous"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
-    <!-- <script src="./controller.js"></script> -->
-    <script>
-    
-    
-var emplopyeeDirectoryApp = angular.module('emplopyeeDirectoryApp', []);
-emplopyeeDirectoryApp.controller('employeeCtrl', ['$scope', '$http', function($scope, $http) {    
-    
-  var updateView=function(){
-         $http.get('/getAllEmployees').then(function(response) {
-             console.log("response " + response.data )
-         $scope.employees = response.data; 
-         console.log(" $scope.employee " + $scope.employees[0]._id, $scope.employees[0].Id )
-         $scope.employee={ };
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
+  <script>
+    var emplopyeeDirectoryApp = angular.module('emplopyeeDirectoryApp', []);
+    emplopyeeDirectoryApp.controller('employeeCtrl', ['$scope', '$http', function ($scope, $http) {
+      var updateView = function () {
+        $http.get('/getAllEmployees').then(function (response) {
+          console.log("response " + response.data)
+          $scope.employees = response.data;
+          $scope.employee = {};
         });
-  };
-
-  updateView();
-  
-    $scope.addEmployee = function() {
-      $http.post('/createEmployee', $scope.employee).then(function(response) {
-        updateView();
-      });
-    };
-    
-    $scope.removeEmployee = function(id) {
-      $http.delete('/deleteEmployee/' + id).then(function(response) {
+      };
+      updateView();
+      $scope.addEmployee = function () {
+        $http.post('/createEmployee', $scope.employee).then(function (response) {
           updateView();
-      });
-    };
-    
-    $scope.editEmployee = function(id) {
-      console.log(id);
-      $http.get('/editEmployee/' + id).then(function(response) {
-      $scope.employee = response;
-     });
-   };
-    
-    $scope.updateEmployee = function() {
-     console.log($scope.employee._id);
-     $http.put('/updateEmployee/' + $scope.employee._id, $scope.employee).then(function(response) {
-       updateView();
-     });
-    };
-    
-
-}]);
-
-
-
-
-
-    </script>
+        });
+      };
+      $scope.removeEmployee = function (id) {
+        console.log('emp _id is' + id);
+        $http.delete('/deleteEmployee/' + id).then(function (response) {
+          updateView();
+        });
+      };
+      $scope.editEmployee = function (id) {
+        console.log(id);
+        $http.get('/editEmployee/' + id).then(function (response) {
+          $scope.employee = response.data;
+        });
+      };
+      $scope.updateEmployee = function () {
+        console.log($scope.employee._id);
+        $http.put('/updateEmployee/' + $scope.employee._id, $scope.employee).then(function (response) {
+          updateView();
+        });
+      };
+    }]);
+  </script>
   <script>
     $(function () {
       var datepicker = $("#datepicker").datepicker(
@@ -73,70 +56,68 @@ emplopyeeDirectoryApp.controller('employeeCtrl', ['$scope', '$http', function($s
     });
   </script>
 </head>
-
 <body>
   <div class="container" ng-controller="employeeCtrl">
-    <br/>
-    <h1 align="center">MEAN Stack Application - Employee Directory</h1>
-    <br/>
-    <br/>
-    <table class="table">
-      <thead>
-        <tr>
-          <td>Name</td>
-          <td>Email</td>
-          <td>Date of Birth</td>
-          <td>Department</td>
-          <td>Gender</td>
-          <td>Age</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <form>
-            <td>
-              <input class="form-control" type="text" ng-model="employee.Name" required placeholder="Name" />
-            </td>
-            <td>
-              <input type="email" ng-model="employee.Email" required class="form-control" placeholder="abc@xyz.com" />
-            </td>
-            <td>
-              <input type="text" ng-model="employee.DateofBirth" id="datepicker" class="form-control" required placeholder="YYYY-MM-DD"
-              />
-            </td>
-            <td>
-              <input ng-model="employee.Deaprtment" required class="form-control" placeholder="Department" />
-            </td>
-            <td>
-              <input ng-model="employee.Gender" required class="form-control" placeholder="Gender" />
-            </td>
-            <td>
-              <input type="number" ng-model="employee.age" disabled class="form-control" placeholder="Age" />
-            </td>
-            <td>
-              <button class="btn btn-success btn-md" ng-click="addEmployee()">Add Employee</button>
+    <br /> <br /> <br />
+    <div class="panel panel-default">
+      <div class="panel-heading center">MEAN Stack Application - Employee Directory</div>
+      <div class="panel-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <td>Name</td>
+              <td>Email</td>
+              <td>Date of Birth</td>
+              <td>Department</td>
+              <td>Gender</td>
+              <td>Age</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <form>
+                <td>
+                  <input class="form-control" type="text" ng-model="employee.Name" required placeholder="Name" />
+                </td>
+                <td>
+                  <input type="email" ng-model="employee.Email" required class="form-control" placeholder="abc@xyz.com" />
+                </td>
+                <td>
+                  <input type="text" ng-model="employee.DateofBirth" id="datepicker" class="form-control" required placeholder="YYYY-MM-DD"
+                  />
+                </td>
+                <td>
+                  <input ng-model="employee.Department" required class="form-control" placeholder="Department" />
+                </td>
+                <td>
+                  <input ng-model="employee.Gender" required class="form-control" placeholder="Gender" />
+                </td>
+                <td>
+                  <input type="number" ng-model="employee.Age" disabled class="form-control" placeholder="Age" />
+                </td>
+                <td>
+                  <button class="btn btn-success btn-md" ng-click="addEmployee()">Add Employee</button>
+                  <td>
+                    <button class="btn btn-info btn-md" ng-click="updateEmployee()">Update Employee</button>
+                  </td>
+                </td>
+              </form>
+            </tr>
+            <tr ng-repeat="employee in employees">
+              <td>{{employee.Name}}</td>
+              <td>{{employee.Email}}</td>
+              <td>{{employee.DateofBirth | date:'yyyy-MM-dd'}}</td>
+              <td>{{employee.Department}}</td>
+              <td>{{employee.Gender}}</td>
+              <td>{{employee.Age}}</td>
               <td>
-                <button class="btn btn-success btn-md" ng-click="updateEmployee()">Update Employee</button>
+                <button class="btn btn-primary btn-sm" ng-click="editEmployee(employee._id)">Edit</button>&nbsp;&nbsp;
+                <button class="btn btn-danger btn-sm" ng-click="removeEmployee(employee._id)">Delete</button>
               </td>
-            </td>
-          </form>
-        </tr>
-        <tr ng-repeat="employee in employees">
-          <td>{{employee.Name}}</td>
-          <td>{{employee.Email}}</td>
-          <td>{{employee.DateofBirth | date:'yyyy-MM-dd'}}</td>
-          <td>{{employee.Department}}</td>
-          <td>{{employee.Gender}}</td>
-          <td>{{employee.age}}</td>
-          <td>
-            <button class="btn btn-danger btn-sm" ng-click="removeEmployee(employee._Id)">Delete</button>&nbsp;&nbsp;
-            <button class="btn btn-primary btn-sm" ng-click="editEmployee(employee._Id)">Edit</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 </body>
-
 </html>

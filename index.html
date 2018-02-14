@@ -58,6 +58,7 @@
     <div class="panel panel-default">
       <div class="panel-heading center">MEAN Stack Application - Employee Directory</div>
       <div class="panel-body">
+        <form name="employeeform">
         <table class="table">
           <thead>
             <tr>
@@ -71,7 +72,6 @@
           </thead>
           <tbody>
             <tr>
-              <form>
                 <td>
                   <input class="form-control" type="text" ng-model="employee.Name" required placeholder="Name" />
                 </td>
@@ -92,12 +92,11 @@
                   <input type="number" ng-model="employee.Age" disabled class="form-control" placeholder="Age" />
                 </td>
                 <td>
-                  <button class="btn btn-success btn-md" ng-click="addEmployee()">Add Employee</button>
+                  <button class="btn btn-success btn-md" ng-disabled="employeeform.$invalid" ng-click="addEmployee()">Add Employee</button>
                   <td>
-                    <button class="btn btn-info btn-md" ng-click="updateEmployee()">Update Employee</button>
+                    <button class="btn btn-info btn-md" ng-disabled="employeeform.$invalid" ng-click="updateEmployee()">Update Employee</button>
                   </td>
                 </td>
-              </form>
             </tr>
             <tr ng-repeat="employee in employees">
               <td>{{employee.Name}}</td>
@@ -113,6 +112,7 @@
             </tr>
           </tbody>
         </table>
+      </form>
       </div>
     </div>
 </body>

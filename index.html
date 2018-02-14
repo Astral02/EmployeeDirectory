@@ -17,13 +17,9 @@
         $http.get('/getAllEmployees').then(function (response) {
           $scope.employees = response.data;
           $scope.employee = {};
-          $scope.isEdit = false;
-          $scope.isAdd = true;
         });
       };
       updateView();
-      $scope.isEdit = false;
-      $scope.isAdd = true;
       $scope.cancel = function(){
         $scope.employee = {};
         updateView();
@@ -39,8 +35,6 @@
         });
       };
       $scope.editEmployee = function (id) {
-        $scope.isEdit = true;
-         $scope.isAdd = false;
         $http.get('/editEmployee/' + id).then(function (response) {
           $scope.employee = response.data;
         });
@@ -102,10 +96,10 @@
                   <input type="number" ng-model="employee.Age" disabled class="form-control" placeholder="Age" />
                 </td>
                 <td>
-                  <button class="btn btn-success btn-md" ng-disabled="employeeform.$invalid && isAdd" ng-click="addEmployee()">Add</button>
+                  <button class="btn btn-success btn-md" ng-disabled="employeeform.$invalid" ng-click="addEmployee()">Add</button>
                    </td>
                   <td>
-                    <button class="btn btn-info btn-md" ng-disabled="employeeform.$invalid && isEdit" ng-click="updateEmployee()">Update</button>
+                    <button class="btn btn-info btn-md" ng-disabled="employeeform.$invalid" ng-click="updateEmployee()">Update</button>
                   </td>
                   <td>
                     <button class="btn btn-info btn-md" ng-click="cancel()">Cancel</button>

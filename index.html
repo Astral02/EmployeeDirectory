@@ -23,7 +23,7 @@ emplopyeeDirectoryApp.controller('employeeCtrl', ['$scope', '$http', function($s
              console.log("response " + response.data )
          $scope.employees = response.data; 
          console.log(" $scope.employee " + $scope.employees[0]._id, $scope.employees[0].Id )
-         $scope.employee="";
+         $scope.employee={ };
         });
   };
 
@@ -43,14 +43,14 @@ emplopyeeDirectoryApp.controller('employeeCtrl', ['$scope', '$http', function($s
     
     $scope.editEmployee = function(id) {
       console.log(id);
-      $http.get('/editemployee/' + id).then(function(response) {
+      $http.get('/editEmployee/' + id).then(function(response) {
       $scope.employee = response;
      });
    };
     
     $scope.updateEmployee = function() {
-     console.log($scope.employee.id);
-     $http.put('/updateEmployee/' + $scope.employee.id, $scope.employee).then(function(response) {
+     console.log($scope.employee._id);
+     $http.put('/updateEmployee/' + $scope.employee._id, $scope.employee).then(function(response) {
        updateView();
      });
     };
@@ -95,7 +95,7 @@ emplopyeeDirectoryApp.controller('employeeCtrl', ['$scope', '$http', function($s
         <tr>
           <form>
             <td>
-              <input class="form-control" ng-model="employee.Name" required placeholder="Name" />
+              <input class="form-control" type="text" ng-model="employee.Name" required placeholder="Name" />
             </td>
             <td>
               <input type="email" ng-model="employee.Email" required class="form-control" placeholder="abc@xyz.com" />
@@ -129,8 +129,8 @@ emplopyeeDirectoryApp.controller('employeeCtrl', ['$scope', '$http', function($s
           <td>{{employee.Gender}}</td>
           <td>{{employee.age}}</td>
           <td>
-            <button class="btn btn-danger btn-sm" ng-click="removeEmployee(employee.Id)">Delete</button>&nbsp;&nbsp;
-            <button class="btn btn-primary btn-sm" ng-click="editEmployee(employee.Id)">Edit</button>
+            <button class="btn btn-danger btn-sm" ng-click="removeEmployee(employee._Id)">Delete</button>&nbsp;&nbsp;
+            <button class="btn btn-primary btn-sm" ng-click="editEmployee(employee._Id)">Edit</button>
           </td>
         </tr>
       </tbody>

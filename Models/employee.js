@@ -20,7 +20,6 @@ mongoose.connection.on('disconnected', function(){
 var Schema = mongoose.Schema;
 
 var employeeSchema = new Schema({
-    Id: {type: Number, unique: true},
     Name: String,
     Email: { type: String, unique: true},
     DateofBirth: String,
